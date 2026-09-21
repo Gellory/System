@@ -9,7 +9,7 @@ module.exports = async (client, emoji) => {
       
         const fetchedLogs = await emoji.guild.fetchAuditLogs({
             limit: 1,
-            type: 'EMOJI_CREATE',
+            type: 'EMOJI_DELETE',
         });
       
         const emojiLog = fetchedLogs.entries.first();
@@ -17,17 +17,18 @@ module.exports = async (client, emoji) => {
       
         const { executor } = emojiLog;
       
-        // التحقق مما إذا كان الشخص الذي قام بإضافة الإيموجي هو البوت
+        // التحقق مما إذا كان الشخص الذي قام بحذف الإيموجي هو البوت
         if (executor.id === client.user.id) return;
       
         let emojiEmbed = new Discord.EmbedBuilder()
             .setAuthor(executor.tag, executor.displayAvatarURL({ dynamic: true, size: 1024, format: 'png' }))
             .setColor('#192029')
-            .setDescription(`**إضافة إيموجي**\n\n**بواسطة : <@${executor.id}>**\n**الإيموجي : ${emoji}**\n**عدد الإيموجيات :** \`${emoji.guild.emojis.cache.size.toString()}\`\n**رابط الإمويجي :** [Link](${emoji.url})`)
-            .setFooter({ text: client.user.username, iconURL: client.user.displayAvatarURL() })
-            .setThumbnail(emoji.url);
+            .setDescription(`**حذف إيموجي**\n\n**بواسطة : <@${executor.id}>**\n**الإيموجي : ${emoji}**`)
+            .setThumbnail(emoji.url)
+            .setFooter({ text: client.user.username, iconURL: client.user.displayAvatarURL() });
       
         logChannel.send({ embeds: [emojiEmbed] });
+      
       
     }
 
