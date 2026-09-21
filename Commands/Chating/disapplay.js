@@ -2,7 +2,7 @@ const Pro = require(`pro.db`)
 const { owners, prefix } = require(`${process.cwd()}/config`);
 
 module.exports = {
-  name: "applay",
+  name: "disapplay",
   run: async (client, message) => {
 
     if (!owners.includes(message.author.id)) return message.react('❌');
@@ -12,12 +12,12 @@ module.exports = {
     }
 
     message.channel.permissionOverwrites.create(message.guild.roles.everyone, {
-      MentionEveryone: true,
-      AttachFiles: true
+      MentionEveryone: false,
+      AttachFiles: false
 
     });
 
-    message.reply("**تم تفعيل المنشن والصور بالشات .**")
+    message.reply("**تم تعطيل المنشن والصور بالشات .**")
 
   }
 }
